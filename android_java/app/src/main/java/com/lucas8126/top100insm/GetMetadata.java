@@ -33,10 +33,6 @@ public class GetMetadata {
             Parser parser = new Mp3Parser();
             ParseContext parse_context = new ParseContext();
             parser.parse(is, handler, metadata, parse_context);
-
-            for (String name : metadata.names()) {
-                System.out.println(name + ": " + metadata.get(name));
-            }
             int song_id = songs.size() + 1;
             Song music = new Song(song_id, metadata.get("dc:title"), metadata.get("xmpDM:artist"), metadata.get("xmpDM:album"));
             if(music.getTitle() == null) {music.setTitle("Unknown");}

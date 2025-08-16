@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.lucas8126.top100insm" />
+                  <option name="mobileSdkAppId" value="1:338556604:android:9ea82737436690480102b9" />
+                  <option name="projectId" value="top-100-from-samsung-music" />
+                  <option name="projectNumber" value="338556604" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

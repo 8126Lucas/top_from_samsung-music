@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -46,10 +47,13 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
     implementation("org.apache.tika:tika-core:3.2.2")
     implementation("org.apache.tika:tika-parsers-standard-package:3.2.2") {
         exclude(group = "commons-logging", module = "commons-logging")
     }
     implementation("com.google.code.gson:gson:2.13.1")
+    implementation(platform("com.google.firebase:firebase-bom:34.1.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-storage:22.0.0")
+    implementation("com.google.firebase:firebase-auth:22.1.2")
 }

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SongsToJSON {
-    public static void writeJSONFile(ArrayList<Song> songs, Context context) {
+    public static File writeJSONFile(ArrayList<Song> songs, Context context) {
         Gson gson = new Gson();
         File json_file = new File(context.getFilesDir(), "MOST_LISTENED.json");
         try (FileWriter writer = new FileWriter(json_file)) {
@@ -17,5 +17,6 @@ public class SongsToJSON {
         } catch (IOException error) {
             Toast.makeText(context, "❌ JSON writing failed: " + error.getMessage(), Toast.LENGTH_LONG).show();
         }
+        return json_file;
     }
 }
