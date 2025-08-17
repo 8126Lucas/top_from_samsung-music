@@ -1,0 +1,26 @@
+{
+  "name": "top_from_samsung-music",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/8126Lucas/top_from_samsung-music#readme",
+  "bugs": {
+    "url": "https://github.com/8126Lucas/top_from_samsung-music/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/8126Lucas/top_from_samsung-music.git"
+  },
+  "license": "ISC",
+  "author": "8126Lucas",
+  "main": "script.js",
+  "scripts": {
+    "dev": "vite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "firebase": "^12.1.0"
+  },
+  "devDependencies": {
+    "vite": "^7.1.2"
+  }
+}

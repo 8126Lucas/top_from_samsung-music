@@ -1,0 +1,49 @@
+body {
+    background-color: antiquewhite;
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.song {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr 1fr;
+    border: 2px solid #333;
+    margin: 15px 0;
+    background-color: white;
+    align-items: center; 
+    border-radius: 20px;
+}
+
+.position {
+    grid-column: 1;
+    background-color: #2196F3;
+    color: white;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.title {
+    grid-column: 2;
+    padding: 15px;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+}
+
+.artist {
+    grid-column: 3;
+    padding: 15px;
+    font-size: 1.1em;
+    color: #666;
+}
+
+.album {
+    grid-column: 4;
+    padding: 15px;
+    font-size: 1em;
+    color: #888;
+    font-style: italic;
+}

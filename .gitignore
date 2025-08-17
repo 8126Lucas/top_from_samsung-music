@@ -27,4 +27,6 @@ yarn-error.log*
 # Environment files (local configs)
 /.env.*
 
-/google-services.json
+google-services.json
+node_modules/
+cors.json
