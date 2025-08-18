@@ -3,7 +3,7 @@ import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 
 const positions = [
     '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣',
-    '1️⃣1️⃣', '1️⃣2️⃣', '1️⃣3️⃣', '1️⃣4️⃣', '1️⃣5️⃣', '1️⃣6️⃣', '1️⃣7️⃣', '1️⃣8️⃣', '1️⃣9️⃣',
+    '1️⃣0️⃣', '1️⃣1️⃣', '1️⃣2️⃣', '1️⃣3️⃣', '1️⃣4️⃣', '1️⃣5️⃣', '1️⃣6️⃣', '1️⃣7️⃣', '1️⃣8️⃣', '1️⃣9️⃣',
     '2️⃣0️⃣', '2️⃣1️⃣', '2️⃣2️⃣', '2️⃣3️⃣', '2️⃣4️⃣', '2️⃣5️⃣', '2️⃣6️⃣', '2️⃣7️⃣', '2️⃣8️⃣', '2️⃣9️⃣',
     '3️⃣0️⃣', '3️⃣1️⃣', '3️⃣2️⃣', '3️⃣3️⃣', '3️⃣4️⃣', '3️⃣5️⃣', '3️⃣6️⃣', '3️⃣7️⃣', '3️⃣8️⃣', '3️⃣9️⃣',
     '4️⃣0️⃣', '4️⃣1️⃣', '4️⃣2️⃣', '4️⃣3️⃣', '4️⃣4️⃣', '4️⃣5️⃣', '4️⃣6️⃣', '4️⃣7️⃣', '4️⃣8️⃣', '4️⃣9️⃣',
@@ -47,7 +47,7 @@ function displaySongs(json_data) {
     for(let i = 0; i < 100; i++) {
         if(json_data[i].album != "") {
             doc.innerHTML += `<div class="song">
-            <div class="position">${i+1}</div>
+            <div class="position">${positions[i]}</div>
             <div class="title">${json_data[i].title}</div>
             <div class="album">${json_data[i].album}</div>
             <div class="artist">${json_data[i].artist}</div>
@@ -55,7 +55,7 @@ function displaySongs(json_data) {
         }
         else {
             doc.innerHTML += `<div class="song">
-            <div class="position">${i+1}</div>
+            <div class="position">${positions[i]}</div>
             <div class="title">${json_data[i].title}</div>
             <div class="artist">${json_data[i].artist}</div>
             </div>`
