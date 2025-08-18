@@ -38,7 +38,7 @@ getDownloadURL(path_reference)
     })
     .then((json_data) => {
         console.log(json_data);
-        // displaySongs(json_data);
+        displaySongs(json_data);
     });
 
 var doc = document.body;
@@ -46,10 +46,19 @@ var doc = document.body;
 function displaySongs(json_data) {
     for(let i = 0; i < 100; i++) {
         if(json_data[i].album != "") {
-            doc.innerHTML += `<p>${i+1}: ${json_data[i].title} (${json_data[i].album}) - ${json_data[i].artist}</p><hr>`
+            doc.innerHTML += `<div class="song">
+            <div class="position">${i+1}</div>
+            <div class="title">${json_data[i].title}</div>
+            <div class="album">${json_data[i].album}</div>
+            <div class="artist">${json_data[i].artist}</div>
+            </div>`
         }
         else {
-            doc.innerHTML += `<p>${i+1}: ${json_data[i].title} - ${json_data[i].artist}</p><hr>`
+            doc.innerHTML += `<div class="song">
+            <div class="position">${i+1}</div>
+            <div class="title">${json_data[i].title}</div>
+            <div class="artist">${json_data[i].artist}</div>
+            </div>`
         }
     }
 }
