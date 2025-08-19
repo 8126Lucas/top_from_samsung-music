@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+body {
+    background-color: #1e1e1e;
+    font-family: "Baumans", system-ui;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
+    align-items: center;
+    justify-items: center;
+    margin: 20px;
+    color: lightgray;
+}
+/* .baumans-regular {
+  font-family: "Baumans", system-ui;
+  font-weight: 400;
+  font-style: normal;
+} */
+
+
+.song {
+  opacity: 1;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1fr 0.5fr 0.2fr;
+  grid-template-rows: 1fr 1fr;
+  border-bottom: 1px solid rgb(214, 214, 214);
+  margin-bottom: 16px;
+  width: 80%;
+  align-items: center;
+  column-gap: 10px;
+}
+.position {
+  grid-column: 1/2;
+  grid-row: 1/3;
+  font-size: 28px;
+  color: lightblue;
+
+}
+.title {
+  grid-column: 2/3;
+  grid-row: 1/2;
+  text-align: left;
+  font-size: 20px;
+  color: lightblue;
+}
+.artist {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  text-align: left;
+  font-size: 16px;
+}
+.album {
+  grid-column: 3/4;
+  grid-row: 1/3;
+}
+.duration {
+  grid-column: 4/5;
+  grid-row: 1/3;
+}
+.youtube {
+  grid-column: 5/6;
+  grid-row: 1/3;
+}
+
+
+

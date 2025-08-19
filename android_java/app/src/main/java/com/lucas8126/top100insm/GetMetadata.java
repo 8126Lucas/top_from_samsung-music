@@ -17,6 +17,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class GetMetadata {
+    public static String youtubeURL(String title, String artist) {
+        title = title.replace(" ", "+");
+        artist = artist.replace(" ", "+");
+        return "https://www.youtube.com/search?q=" + title + "+" + artist;
+    }
+
     public static void extractMetadata(Context context, ArrayList<Song> songs, String music_location) {
         File music_file = new File(music_location);
         if (!music_file.exists() || !music_file.isFile()) {
@@ -34,10 +40,15 @@ public class GetMetadata {
             ParseContext parse_context = new ParseContext();
             parser.parse(is, handler, metadata, parse_context);
             int song_id = songs.size() + 1;
-            Song music = new Song(song_id, metadata.get("dc:title"), metadata.get("xmpDM:artist"), metadata.get("xmpDM:album"));
+            String youtube = youtubeURL(metadata.get("dc:title"), metadata.get("xmpDM:artist"));
+            Song music = new Song(song_id, metadata.get("dc:title"),
+                                    metadata.get("xmpDM:artist"), metadata.get("xmpDM:album"),
+                                    metadata.get("xmpDM:duration"), youtube);
             if(music.getTitle() == null) {music.setTitle("Unknown");}
             if(music.getArtist() == null) {music.setArtist("Unknown");}
             if(music.getAlbum() == null) {music.setAlbum("Unknown");}
+            if(music.getDuration() == null) {music.setDuration("Unknown");}
+            if(music.getYoutube() == null) {music.setYoutube("Unknown");}
             songs.add(music);
         } catch (TikaException | IOException | SAXException error) {
             Toast.makeText(context, "❌ Metadata extraction failed: " + error.getMessage(), Toast.LENGTH_LONG).show();

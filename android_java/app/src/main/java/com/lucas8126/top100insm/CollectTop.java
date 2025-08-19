@@ -14,14 +14,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public abstract class CollectTop extends Service {
-    private Handler mainThreadHandler;
     private boolean isAuthenticated = false;
 
     @Override
     public void onCreate() {
         super.onCreate();
         FirebaseApp.initializeApp(this);
-        mainThreadHandler = new Handler(Looper.getMainLooper());
+        Handler mainThreadHandler = new Handler(Looper.getMainLooper());
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             auth.signInAnonymously().addOnSuccessListener(auth_result -> {
@@ -65,6 +64,12 @@ public abstract class CollectTop extends Service {
                     System.out.println("✅ " + songs.size() + " songs found!");
                     File json_file = SongsToJSON.writeJSONFile(songs, getApplicationContext());
                     System.out.println("💾 JSON file saved successfully!");
+                    System.out.println("⏰ Waiting for auth token to propagate...");
+                    try {
+                        Thread.sleep(2000); // Espera 2 segundos
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     UploadToFirebase.cloudJSON(json_file, new FirebaseCallback() {
                         @Override
                         public void onSuccess() {
