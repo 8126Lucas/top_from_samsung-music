@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger'; 
 
 const firebaseConfig = {
   apiKey: "AIzaSyA1j9MLD-IMw-3ddcgpcUrlHiRIwn8c0HI",
@@ -12,8 +11,6 @@ const firebaseConfig = {
   appId: "1:338556604:web:6a7ebdd5960c51900102b9",
   measurementId: "G-YZ7HR572Y7"
 };
-
-gsap.registerPlugin(ScrollTrigger);
 
 const app = initializeApp(firebaseConfig);
 const storage = getStorage();
@@ -30,9 +27,12 @@ getDownloadURL(path_reference)
         gsap.from(".song", {
             opacity: 0,
             scale: 0.8,
-            duration: 0.8,
-            stagger: 0.3,
-            ease: "back.out",
+            y: 50,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "back.out(1.7)",
+            rotate: 5,
+            transformOrigin: "center bottom",
         });
     });
 
@@ -67,4 +67,3 @@ function durationTimestamp(duration) {
     let time = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
     return time;
 }
-
