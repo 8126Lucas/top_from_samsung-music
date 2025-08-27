@@ -1,7 +1,6 @@
 package com.lucas8126.top100insm;
 
 import android.content.Context;
-import android.widget.Toast;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,11 +25,11 @@ public class GetMetadata {
     public static void extractMetadata(Context context, ArrayList<Song> songs, String music_location) {
         File music_file = new File(music_location);
         if (!music_file.exists() || !music_file.isFile()) {
-            Toast.makeText(context, "❌ Metadata extraction: File does not exist or is not a file: " + music_location, Toast.LENGTH_SHORT).show();
+            NotificationCentral.showNotification(context, "❌ Metadata extraction: File does not exist or is not a file: " + music_location);
             return;
         }
         if (!music_file.canRead()) {
-            Toast.makeText(context, "❌ Metadata extraction: Cannot read file: " + music_location, Toast.LENGTH_SHORT).show();
+            NotificationCentral.showNotification(context, "❌ Metadata extraction: Cannot read file: " + music_location);
             return;
         }
         try(InputStream is = new FileInputStream(music_file)) {
@@ -51,7 +50,7 @@ public class GetMetadata {
             if(music.getYoutube() == null) {music.setYoutube("Unknown");}
             songs.add(music);
         } catch (TikaException | IOException | SAXException error) {
-            Toast.makeText(context, "❌ Metadata extraction failed: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            NotificationCentral.showNotification(context, "❌ Metadata extraction failed: " + error.getMessage());
         }
     }
 }

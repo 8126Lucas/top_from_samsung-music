@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.widget.Toast;
 import androidx.annotation.Nullable;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,32 +14,30 @@ import java.util.ArrayList;
 
 public abstract class CollectTop extends Service {
     private boolean isAuthenticated = false;
+    private Handler mainThreadHandler = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        NotificationCentral.createNotificationChannel(this);
         FirebaseApp.initializeApp(this);
-        Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+        mainThreadHandler = new Handler(Looper.getMainLooper());
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             auth.signInAnonymously().addOnSuccessListener(auth_result -> {
                 isAuthenticated = true;
-                System.out.println("✅ Authenticated successfully!");
-                System.out.println("🚀 About to call startWork()");
+                NotificationCentral.showNotification(this, "✅ Authenticated successfully!");
                 startWork();
-                System.out.println("✅ startWork() called");
             }).addOnFailureListener(exception -> {
-                System.out.println("❌ Authentication failed!");
-                System.out.println("Error details: " + exception.getMessage());
+                NotificationCentral.showNotification(this, "❌ Authentication failed!");
+
                 stopSelf();
             });
         }
         else {
-            System.out.println("✅ Authenticated successfully!");
+            NotificationCentral.showNotification(this, "✅ Authenticated successfully!");
             isAuthenticated = true;
-            System.out.println("🚀 About to call startWork()");
             startWork();
-            System.out.println("✅ startWork() called");
         }
     }
 
@@ -54,47 +51,42 @@ public abstract class CollectTop extends Service {
             new Thread(() -> {
                 ArrayList<Song> songs;
                 try {
-                    System.out.println("⌛ Loading playlist...");
+                    NotificationCentral.showNotification(this, "⌛ Loading playlist...");
                     songs = GetMusicData.getMusicData(this);
                     if (songs == null) {
-                        System.out.println("❌ Failed to load playlist. Stopping service.");
+                        NotificationCentral.showNotification(this, "❌ Failed to load playlist. Stopping service.");
                         stopSelf();
                         return;
                     }
-                    System.out.println("✅ " + songs.size() + " songs found!");
+                    NotificationCentral.showNotification(this, "✅ " + songs.size() + " songs found!");
                     File json_file = SongsToJSON.writeJSONFile(songs, getApplicationContext());
-                    System.out.println("💾 JSON file saved successfully!");
-                    System.out.println("⏰ Waiting for auth token to propagate...");
+                    NotificationCentral.showNotification(this, "⏰ Waiting for auth token to propagate...");
                     try {
-                        Thread.sleep(2000); // Espera 2 segundos
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     UploadToFirebase.cloudJSON(json_file, new FirebaseCallback() {
                         @Override
                         public void onSuccess() {
-                            System.out.println("⬆️ JSON file uploaded successfully!");
+                            NotificationCentral.showNotification(CollectTop.this, "⬆️ JSON file uploaded successfully!");
                         }
                         @Override
                         public void onFailure() {
-                            System.out.println("❌ JSON file upload failed!");
+                            NotificationCentral.showNotification(CollectTop.this, "❌ JSON file upload failed!");
                         }
                     });
                 } catch (FileNotFoundException error) {
-                    System.out.println("❌ M3U file not found: " + error.getMessage());
+                    NotificationCentral.showNotification(this, "❌ M3U file not found: " + error.getMessage());
                 } finally {
                     stopSelf();
                 }
             }).start();
         }
         else {
-            System.out.println("⌛ Still authenticating, please wait...");
+            NotificationCentral.showNotification(this, "⌛ Still authenticating, please wait...");
         }
     }
-
-//    private void showToast(final String message) {
-//        mainThreadHandler.post(() -> Toast.makeText(CollectTop.this, message, Toast.LENGTH_LONG).show());
-//    }
 
     @Nullable
     @Override

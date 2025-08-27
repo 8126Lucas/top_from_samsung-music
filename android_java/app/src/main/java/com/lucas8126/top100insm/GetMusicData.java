@@ -2,7 +2,6 @@ package com.lucas8126.top100insm;
 
 import android.content.Context;
 import android.os.Environment;
-import android.widget.Toast;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,7 +13,7 @@ public class GetMusicData {
         ArrayList<Song> songs = new ArrayList<>();
         File playlist = GetFile.searchM3UFile(ROOT_DIR);
         if(playlist == null) {
-            Toast.makeText(context, "❌ MOST_LISTENED.m3u file not found.", Toast.LENGTH_LONG).show();
+            NotificationCentral.showNotification(context, "❌ MOST_LISTENED.m3u file not found.");
             return null;
         }
         List<String> song_paths = GetMusicPath.getMusicPath(context, playlist);

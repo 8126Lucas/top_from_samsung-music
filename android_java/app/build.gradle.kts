@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.lucas8126.top100insm"
-        minSdk = 26 // Updated from 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -33,8 +33,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/DEPENDENCIES"
-            excludes += "/META-INF/LICENSE.md" // Added this line
-            excludes += "/META-INF/NOTICE.md" // Added this line
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/NOTICE.md"
         }
     }
 }

@@ -2,57 +2,85 @@ package com.lucas8126.top100insm;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PermissionsHandler extends Activity {
-    private static final int STORAGE_PERMISSION_REQUEST_CODE = 101;
+    private static final int PERMISSION_REQUEST_CODE = 100;
     private static final String TAG = "PermissionsHandler";
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permissions_handler);
         requestPermissions();
     }
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     private void requestPermissions() {
-        String permission_to_request;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            permission_to_request = Manifest.permission.READ_MEDIA_AUDIO;
-        } else {
-            permission_to_request = Manifest.permission.READ_EXTERNAL_STORAGE;
+        String[] permissions = {
+                Manifest.permission.READ_MEDIA_AUDIO,
+                Manifest.permission.POST_NOTIFICATIONS
+        };
+        List<String> permissions_to_request = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                permissions_to_request.add(permission);
+            }
         }
-
-        if (ContextCompat.checkSelfPermission(this, permission_to_request) != PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG, "Permission not granted, requesting: " + permission_to_request);
-            ActivityCompat.requestPermissions(this, new String[]{permission_to_request}, STORAGE_PERMISSION_REQUEST_CODE);
-        } else {
-            Log.d(TAG, "Permission already granted: " + permission_to_request);
+        if(!permissions_to_request.isEmpty()) {
+            boolean show_read_audio_warning = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_MEDIA_AUDIO);
+            boolean show_post_notification_warning = ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.POST_NOTIFICATIONS);
+            if(show_read_audio_warning || show_post_notification_warning) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Permissions Required")
+                        .setMessage("This app requires the permissions to function.")
+                        .setPositiveButton("Ok", (dialog, which) -> {
+                            ActivityCompat.requestPermissions(this,
+                                    permissions_to_request.toArray(new String[0]),
+                                    PERMISSION_REQUEST_CODE);
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> finish())
+                        .show();
+            }
+            else {
+                ActivityCompat.requestPermissions(this,
+                        permissions_to_request.toArray(new String[0]),
+                        PERMISSION_REQUEST_CODE);
+            }
+        }
+        else {
             startService();
-            finish();
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int request_code, @NonNull String[] permissions, @NonNull int[] grant_results) {
         super.onRequestPermissionsResult(request_code, permissions, grant_results);
-        if (request_code == STORAGE_PERMISSION_REQUEST_CODE) {
-            if (grant_results.length > 0 && grant_results[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "Permission granted by user.");
-                startService();
-            } else {
-                Log.e(TAG, "Permission denied by user.");
-                Toast.makeText(this, "Music access permission is required for this app to function.", Toast.LENGTH_LONG).show();
+        if (request_code == PERMISSION_REQUEST_CODE) {
+            List<String> denied_permissions = new ArrayList<>();
+            for(int i = 0; i < permissions.length; i++) {
+                if(grant_results[i] != PackageManager.PERMISSION_GRANTED) {
+                    denied_permissions.add(permissions[i]);
+                }
             }
-            finish();
+            if(denied_permissions.isEmpty()) {
+                startService();
+            }
+            else {
+                finish();
+            }
         }
     }
 
@@ -61,10 +89,12 @@ public class PermissionsHandler extends Activity {
         try {
             startService(service_intent);
             Log.d(TAG, "TopMusicCollection service started.");
-            Toast.makeText(this, "Starting music collection service...", Toast.LENGTH_SHORT).show();
+            NotificationCentral.showNotification(this, "✅ Music collection service started.");
+            finish();
         } catch (Exception e) {
             Log.e(TAG, "Failed to start TopMusicCollection service: " + e.getMessage());
-            Toast.makeText(this, "Failed to start music service.", Toast.LENGTH_LONG).show();
+            NotificationCentral.showNotification(this, "❌ Failed to start music service.");
+            finish();
         }
     }
 }
