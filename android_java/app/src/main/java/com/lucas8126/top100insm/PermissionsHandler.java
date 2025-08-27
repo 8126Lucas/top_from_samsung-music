@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -18,7 +18,6 @@ import java.util.List;
 
 public class PermissionsHandler extends Activity {
     private static final int PERMISSION_REQUEST_CODE = 100;
-    private static final String TAG = "PermissionsHandler";
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -88,12 +87,11 @@ public class PermissionsHandler extends Activity {
         Intent service_intent = new Intent(this, TopMusicCollection.class);
         try {
             startService(service_intent);
-            Log.d(TAG, "TopMusicCollection service started.");
-            NotificationCentral.showNotification(this, "✅ Music collection service started.");
+            System.out.println("TopMusicCollection service started.");
             finish();
         } catch (Exception e) {
-            Log.e(TAG, "Failed to start TopMusicCollection service: " + e.getMessage());
-            NotificationCentral.showNotification(this, "❌ Failed to start music service.");
+            System.out.println("Failed to start TopMusicCollection service: " + e.getMessage());
+            NotificationCentral.showNotification(this, "❌ Failed to start the app.");
             finish();
         }
     }

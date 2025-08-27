@@ -16,7 +16,10 @@ public class GetMusicData {
             NotificationCentral.showNotification(context, "❌ MOST_LISTENED.m3u file not found.");
             return null;
         }
-        List<String> song_paths = GetMusicPath.getMusicPath(context, playlist);
+        else {
+            NotificationCentral.showNotification(context, "✅ File found: " + playlist.getName());
+        }
+        List<String> song_paths = GetMusicPath.getMusicPath(playlist);
         assert song_paths != null;
         for(String paths : song_paths) {
             GetMetadata.extractMetadata(context, songs, paths);

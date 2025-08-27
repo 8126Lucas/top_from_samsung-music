@@ -22,7 +22,8 @@ public class NotificationCentral {
         notification_builder.setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("My Top 100")
                 .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setGroupSummary(false);
         NotificationManagerCompat notification_manager = NotificationManagerCompat.from(context);
         notification_manager.notify(NOTIFICATION_ID, notification_builder.build());
     }

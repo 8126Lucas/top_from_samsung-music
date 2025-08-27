@@ -1,7 +1,5 @@
 package com.lucas8126.top100insm;
 
-import android.content.Context;
-import android.widget.Toast;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -9,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GetMusicPath {
-    public static List<String> getMusicPath(Context context, File playlist) {
+    public static List<String> getMusicPath(File playlist) {
         List<String> music_paths = new ArrayList<>();
         try(Scanner scanner = new Scanner(playlist)) {
             if(scanner.hasNextLine()) {
@@ -29,7 +27,7 @@ public class GetMusicPath {
                 }
             }
         } catch(FileNotFoundException error) {
-            Toast.makeText(context, "❌ M3U file not found: " + error.getMessage(), Toast.LENGTH_LONG).show();
+            System.out.println("❌ M3U file not found: " + error.getMessage());
             return null;
         }
         return music_paths;

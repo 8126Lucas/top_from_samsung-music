@@ -11,6 +11,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory;
+import com.google.firebase.appcheck.FirebaseAppCheck;
 
 public abstract class CollectTop extends Service {
     private boolean isAuthenticated = false;
@@ -21,6 +23,8 @@ public abstract class CollectTop extends Service {
         super.onCreate();
         NotificationCentral.createNotificationChannel(this);
         FirebaseApp.initializeApp(this);
+        FirebaseAppCheck firebase_app_check = FirebaseAppCheck.getInstance();
+        firebase_app_check.installAppCheckProviderFactory(DebugAppCheckProviderFactory.getInstance());
         mainThreadHandler = new Handler(Looper.getMainLooper());
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
@@ -30,7 +34,6 @@ public abstract class CollectTop extends Service {
                 startWork();
             }).addOnFailureListener(exception -> {
                 NotificationCentral.showNotification(this, "❌ Authentication failed!");
-
                 stopSelf();
             });
         }
@@ -51,34 +54,30 @@ public abstract class CollectTop extends Service {
             new Thread(() -> {
                 ArrayList<Song> songs;
                 try {
-                    NotificationCentral.showNotification(this, "⌛ Loading playlist...");
+                    System.out.println("⌛ Loading playlist...");
                     songs = GetMusicData.getMusicData(this);
                     if (songs == null) {
-                        NotificationCentral.showNotification(this, "❌ Failed to load playlist. Stopping service.");
+                        System.out.println("❌ Failed to load playlist. Stopping app.");
                         stopSelf();
                         return;
                     }
                     NotificationCentral.showNotification(this, "✅ " + songs.size() + " songs found!");
                     File json_file = SongsToJSON.writeJSONFile(songs, getApplicationContext());
-                    NotificationCentral.showNotification(this, "⏰ Waiting for auth token to propagate...");
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    System.out.println("⏰ Waiting for auth token to propagate...");
                     UploadToFirebase.cloudJSON(json_file, new FirebaseCallback() {
                         @Override
                         public void onSuccess() {
                             NotificationCentral.showNotification(CollectTop.this, "⬆️ JSON file uploaded successfully!");
+                            stopSelf();
                         }
                         @Override
                         public void onFailure() {
                             NotificationCentral.showNotification(CollectTop.this, "❌ JSON file upload failed!");
+                            stopSelf();
                         }
                     });
                 } catch (FileNotFoundException error) {
-                    NotificationCentral.showNotification(this, "❌ M3U file not found: " + error.getMessage());
-                } finally {
+                    System.out.println("❌ M3U file not found: " + error.getMessage());
                     stopSelf();
                 }
             }).start();

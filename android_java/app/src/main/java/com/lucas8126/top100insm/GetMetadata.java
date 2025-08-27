@@ -25,11 +25,11 @@ public class GetMetadata {
     public static void extractMetadata(Context context, ArrayList<Song> songs, String music_location) {
         File music_file = new File(music_location);
         if (!music_file.exists() || !music_file.isFile()) {
-            NotificationCentral.showNotification(context, "❌ Metadata extraction: File does not exist or is not a file: " + music_location);
+            System.out.println("❌ Metadata extraction: File does not exist or is not a file: " + music_location);
             return;
         }
         if (!music_file.canRead()) {
-            NotificationCentral.showNotification(context, "❌ Metadata extraction: Cannot read file: " + music_location);
+            System.out.println("❌ Metadata extraction: Cannot read file: " + music_location);
             return;
         }
         try(InputStream is = new FileInputStream(music_file)) {
@@ -50,7 +50,7 @@ public class GetMetadata {
             if(music.getYoutube() == null) {music.setYoutube("Unknown");}
             songs.add(music);
         } catch (TikaException | IOException | SAXException error) {
-            NotificationCentral.showNotification(context, "❌ Metadata extraction failed: " + error.getMessage());
+            System.out.println("❌ Metadata extraction failed: " + error.getMessage());
         }
     }
 }
