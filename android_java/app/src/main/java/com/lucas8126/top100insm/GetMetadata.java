@@ -1,6 +1,5 @@
 package com.lucas8126.top100insm;
 
-import android.content.Context;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class GetMetadata {
         return "https://www.youtube.com/search?q=" + title + "+" + artist;
     }
 
-    public static void extractMetadata(Context context, ArrayList<Song> songs, String music_location) {
+    public static void extractMetadata(ArrayList<Song> songs, String music_location) {
         File music_file = new File(music_location);
         if (!music_file.exists() || !music_file.isFile()) {
             System.out.println("❌ Metadata extraction: File does not exist or is not a file: " + music_location);

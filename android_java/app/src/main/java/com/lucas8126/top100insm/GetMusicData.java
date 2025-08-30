@@ -22,7 +22,7 @@ public class GetMusicData {
         List<String> song_paths = GetMusicPath.getMusicPath(playlist);
         assert song_paths != null;
         for(String paths : song_paths) {
-            GetMetadata.extractMetadata(context, songs, paths);
+            GetMetadata.extractMetadata(songs, paths);
         }
         return songs;
     }

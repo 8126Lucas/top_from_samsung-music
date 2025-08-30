@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, getDownloadURL, getMetadata } from 'firebase/storage';
 import { gsap } from 'gsap';
 
 const firebaseConfig = {
@@ -15,6 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage();
 const path_reference = ref(storage, "MOST_LISTENED.json");
+
 getDownloadURL(path_reference)
     .then((url) => {
         return fetch(url)
@@ -34,6 +35,13 @@ getDownloadURL(path_reference)
             rotate: 5,
             transformOrigin: "center bottom",
         });
+    });
+getMetadata(path_reference)
+    .then((metadata) => {
+        lastUpdated(metadata.timeCreated);
+    })
+    .catch(() => {
+        lastUpdated("???");
     });
 
 function displaySongs(json_data) {
@@ -67,3 +75,10 @@ function durationTimestamp(duration) {
     let time = minutes.toString().padStart(2, '0') + ':' + seconds.toString().padStart(2, '0');
     return time;
 }
+
+function lastUpdated(time_updated) {
+    var doc = document.body;
+    const date = new Date(time_updated);
+    const date_formatted = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+    doc.innerHTML += `<div class="updated">Last updated: ${date_formatted}</div>`;
+} 
