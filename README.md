@@ -1,16 +1,19 @@
 # My Top 100 in Samsung Music 🎵
-
-Uma aplicação Android que analisa as tuas músicas mais ouvidas e faz upload para o Firebase.
+Uma **solução completa** que analisa as tuas músicas mais ouvidas: 
+- 📱 App Android para recolha de dados
+- 🌐 Webpage para visualização online
 
 ![GitHub License](https://img.shields.io/github/license/8126Lucas/top_from_samsung-music)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![GitHub issues](https://img.shields.io/github/issues/8126Lucas/top_from_samsung-music)
+![GitHub stars](https://img.shields.io/github/stars/8126Lucas/top_from_samsung-music)
 
 ## 📸 Screenshots
 
-|   Permissões   | Ficheiro Encontrado | Upload Bem Sucedido |
-|----------------|---------------------|---------------------|
-| ![perms](screenshots/Screenshot_20250831_160519_Permission controller.jpg) | ![file](screenshots/Screenshot_20250831_160734_One UI Home.jpg) | ![upload](screenshots/Screenshot_20250831_160720_One UI Home.jpg) |
+|   Permissões   | Ficheiro Encontrado | Upload Bem Sucedido | Website |
+|----------------|---------------------|---------------------|---------|
+| ![perms](screenshots/permissions.jpg) | ![file](screenshots/file_found.jpg) | ![upload](screenshots/upload.jpg) | ![web](screenshots/web.png)
 
 ## 🚀 Funcionalidades
 
@@ -19,6 +22,18 @@ Uma aplicação Android que analisa as tuas músicas mais ouvidas e faz upload p
 - ✅ Gera URLs do YouTube automaticamente usando título + artista para pesquisa
 - ✅ Autentica com Firebase
 - ✅ Upload seguro para a cloud
+
+## 🌐 Webpage de Visualização
+
+Além da aplicação Android, o projeto inclui uma webpage que mostra as músicas numa interface visual:
+
+- ✅ Visualização em tempo real dos dados do Firebase
+- ✅ Design responsivo para todos os dispositivos  
+- ✅ Animações suaves com GSAP
+- ✅ Links diretos para o YouTube
+- ✅ Data da última atualização
+
+**Acesso:** [Ver o meu top de músicas mais ouvidas](https://8126lucas.github.io/top_from_samsung-music/)
 
 ## 📱 Como Funciona
 
@@ -30,11 +45,17 @@ Uma aplicação Android que analisa as tuas músicas mais ouvidas e faz upload p
 
 ## 🔧 Tecnologias Utilizadas
 
+### Aplicação Android
 - **Android SDK** - Plataforma principal
 - **Firebase** - Autenticação e Storage
 - **Apache Tika** - Extração de metadados
 - **Gson** - Conversão para JSON
 - **WorkManager** - Tarefas em background
+### Frontend Web
+- **HTML5/CSS3** - Interface responsiva
+- **JavaScript ES6** - Lógica da aplicação
+- **Firebase SDK** - Conexão em tempo real
+- **GSAP** - Animações e transições
 
 ## 📋 Pré-requisitos
 
@@ -43,7 +64,7 @@ Uma aplicação Android que analisa as tuas músicas mais ouvidas e faz upload p
 - Ficheiro M3U no dispositivo
 - Conexão à internet/dados móveis
 
-## ⚙️ Instalação
+## ⚙️ Instalar a Aplicação
 
 1. Clonar o repositório:
 ```bash
@@ -69,11 +90,48 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
     match /{allPaths=**} {
-      allow read: if true,
+      allow read: if true;
       allow write: if request.auth != null;
     }
   }
 }
+```
+8. Compilar e instalar no dispositivo
+
+## 🌐 Configurar a Webpage
+
+1. Fazer upload dos ficheiros `index.html`, `src/script.js`, `src/style.css` para um servidor web/GitHub Pages <br>
+  1.1. Alternativamente, pode fazer `npm run dev` para correr localmente 
+3. Configurar as regras do Firebase (já definidas acima)
+4. A webpage irá automaticamente buscar os dados mais recentes
+
+**Nota:** Para usar com os teus próprios dados, substitui a configuração Firebase no `script.js` pela tua configuração pessoal.
+
+## 🤝 Como Contribuir
+
+1. Faz um fork do projeto
+2. Cria uma branch para a tua feature (`git checkout -b feature/nova-funcionalidade`)
+3. Commit das tuas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/nova-funcionalidade`)
+5. Abre um Pull Request
+
+## 📁 Estrutura do Projeto
+```bash
+top_from_samsung-music/
+├── android_java/
+│   └── app/
+│       ├── src/main/java/com/lucas8126/top100insm/
+│       │   ├── PermissionsHandler.java    # Gestão de permissões
+│       │   ├── MusicProcessor.java        # Processamento principal
+│       │   ├── CollectTop.java           # Serviço de principal
+│       │   └── ...
+│       └── google-services.json          # Configuração Firebase
+└── web/
+    ├── src
+    │   ├── style.css
+    │   ├── script.js
+    │   └── ...
+    └── index.html
 ```
 
 ## ⚠️ Problemas Conhecidos
@@ -85,7 +143,7 @@ service firebase.storage {
 ## 🛠️ Resolução de Problemas
 
 **Q: A app não encontra o ficheiro M3U?**  
-A: Certifica-te que a playlist tem o nome **MOST_LISTENED**.
+**A:** Certifica-te que a playlist tem o nome **MOST_LISTENED**.
 
 **Q: O upload falha?**  
-A: Verifica a ligação à internet e as configurações do Firebase. Se o telemóvel estiver no modo poupança de bateria, a aplicação só funcionará se tiver permitido o uso de bateria sem restrição.
+**A:** Verifica a ligação à internet e as configurações do Firebase. Se o telemóvel estiver no modo poupança de bateria, a aplicação só funcionará se tiver permitido o uso de bateria sem restrição.
