@@ -1,7 +1,10 @@
-# My Top 100 in Samsung Music 🎵
-Uma **solução completa** que analisa as tuas músicas mais ouvidas: 
-- 📱 App Android para recolha de dados
-- 🌐 Webpage para visualização online
+# My Top 100 on Samsung Music 🎵
+
+[Leia em Português](README.pt.md) | [Read in English](#)
+
+A **complete solution** that analyzes your most listened to songs:
+- 📱 Android app for data collection
+- 🌐 Webpage for online viewing
 
 ![GitHub License](https://img.shields.io/github/license/8126Lucas/top_from_samsung-music)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
@@ -11,121 +14,121 @@ Uma **solução completa** que analisa as tuas músicas mais ouvidas:
 
 ## 📸 Screenshots
 
-|   Permissões   | Ficheiro Encontrado | Upload Bem Sucedido | Website |
+| Permissions | File Found | Upload Successful | Website |
 |----------------|---------------------|---------------------|---------|
 | ![perms](screenshots/permissions.jpg) | ![file](screenshots/file_found.jpg) | ![upload](screenshots/upload.jpg) | ![web](screenshots/web.png)
 
-## 🚀 Funcionalidades
+## 🚀 Features
 
-- ✅ Encontra ficheiros M3U automaticamente
-- ✅ Extrai metadados das músicas (título, artista, álbum)
-- ✅ Gera URLs do YouTube automaticamente usando título + artista para pesquisa
-- ✅ Autentica com Firebase
-- ✅ Upload seguro para a cloud
+- ✅ Automatically finds M3U files
+- ✅ Extracts song metadata (title, artist, album)
+- ✅ Automatically generates YouTube URLs using title + artist for search
+- ✅ Authenticates with Firebase
+- ✅ Secure cloud upload
 
-## 🌐 Webpage de Visualização
+## 🌐 Preview Webpage
 
-Além da aplicação Android, o projeto inclui uma webpage que mostra as músicas numa interface visual:
+In addition to the Android app, the project includes a webpage that displays the songs in a visual interface:
 
-- ✅ Visualização em tempo real dos dados do Firebase
-- ✅ Design responsivo para todos os dispositivos  
-- ✅ Animações suaves com GSAP
-- ✅ Links diretos para o YouTube
-- ✅ Data da última atualização
+- ✅ Real-time preview of Firebase data
+- ✅ Responsive design for all devices
+- ✅ Smooth animations with GSAP
+- ✅ Direct links to YouTube
+- ✅ Last updated date
 
-**Acesso:** [Ver o meu top de músicas mais ouvidas](https://8126lucas.github.io/top_from_samsung-music/)
+**Access:** [See my top listened to songs](https://8126lucas.github.io/top_from_samsung-music/)
 
-## 📱 Como Funciona
+## 📱 How it Works
 
-1. A app pede permissões necessárias
-2. Procura ficheiros `MOST_LISTENED.m3u` no dispositivo
-3. Extrai informações das músicas
-4. Converte tudo para JSON
-5. Faz upload para Firebase Storage
+1. The app requests necessary permissions
+2. Searches for `MOST_LISTENED.m3u` files on the device
+3. Extracts song information
+4. Converts everything to JSON
+5. Uploads to Firebase Storage
 
-## 🔧 Tecnologias Utilizadas
+## 🔧 Technologies Used
 
-### Aplicação Android
-- **Android SDK** - Plataforma principal
-- **Firebase** - Autenticação e Storage
-- **Apache Tika** - Extração de metadados
-- **Gson** - Conversão para JSON
-- **WorkManager** - Tarefas em background
-### Frontend Web
-- **HTML5/CSS3** - Interface responsiva
-- **JavaScript ES6** - Lógica da aplicação
-- **Firebase SDK** - Conexão em tempo real
-- **GSAP** - Animações e transições
+### Android App
+- **Android SDK** - Core Platform
+- **Firebase** - Authentication and Storage
+- **Apache Tika** - Metadata Extraction
+- **Gson** - Conversion to JSON
+- **WorkManager** - Background Tasks
+### Web Frontend
+- **HTML5/CSS3** - Responsive UI
+- **JavaScript ES6** - Application Logic
+- **Firebase SDK** - Real-Time Connection
+- **GSAP** - Animations and Transitions
 
-## 📋 Pré-requisitos
+## 📋 Prerequisites
 
 - Android 13+ (API 33)
 - Java 17
-- Ficheiro M3U no dispositivo
-- Conexão à internet/dados móveis
+- M3U file on the device
+- Internet/mobile data connection
 
-## ⚙️ Instalar a Aplicação
+## ⚙️ Installing the App
 
-1. Clonar o repositório:
+1. Clone the repository:
 ```bash
 git clone https://github.com/8126Lucas/top_from_samsung-music.git
 ```
-2. Iniciar um projeto no Firebase
-3. Obter as chaves SHA-1 e SHA-256 do Firebase:
+2. Start a project in Firebase
+3. Get the SHA-1 and SHA-256 keys from Firebase:
 ```bash
-# No Windows
+# On Windows
 keytool -list -v -keystore %USERPROFILE%\.android\debug.keystore -alias androiddebugkey -storepass android -keypass android
-# Em Linux ou MacOS
+# On Linux or macOS
 keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
 ```
-4. Introduzir as chaves no projeto Firebase:
+4. Insert the keys into the Firebase project:
 ```bash
-"Configurações do projeto" > "Seus aplicativos" > "Aplicativos Android" > "Adicionar impressão digital"
+"Project Settings" > "Your Apps" > "Android Apps" > "Add Fingerprint"
 ```
-5. Fazer download do ficheiro `google-services.json`
-6. Guardar o `google-services.json` em `top_from_samsung-music/android_java/app/`
-7. Definir as regras do Firebase
+5. Download `google-services.json`
+6. Save `google-services.json` in `top_from_samsung-music/android_java/app/`
+7. Define Firebase Rules
 ```javascript
 rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read: if true;
-      allow write: if request.auth != null;
+firebase.storage service {
+    match /b/{bucket}/o {
+        match /{allPaths=**} {
+            allow read: if true;
+            allow write: if request.auth != null;
+        }
     }
-  }
 }
 ```
-8. Compilar e instalar no dispositivo
+8. Compile and install on the device
 
-## 🌐 Configurar a Webpage
+## 🌐 Configuring the Webpage
 
-1. Fazer upload dos ficheiros `index.html`, `src/script.js`, `src/style.css` para um servidor web/GitHub Pages <br>
-  1.1. Alternativamente, pode fazer `npm run dev` para correr localmente 
-3. Configurar as regras do Firebase (já definidas acima)
-4. A webpage irá automaticamente buscar os dados mais recentes
+1. Upload the `index.html`, `src/script.js`, `src/style.css` files to a web server/GitHub Pages <br>
+1.1. Alternatively, you can use `npm run dev` to run locally
+3. Configure the Firebase rules (already defined above)
+4. The webpage will automatically fetch the latest data
 
-**Nota:** Para usar com os teus próprios dados, substitui a configuração Firebase no `script.js` pela tua configuração pessoal.
+**Note: **To use with your own data, replace the Firebase configuration in `script.js` with your own configuration.
 
-## 🤝 Como Contribuir
+## 🤝 How to Contribute
 
-1. Faz um fork do projeto
-2. Cria uma branch para a tua feature (`git checkout -b feature/nova-funcionalidade`)
-3. Commit das tuas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/nova-funcionalidade`)
-5. Abre um Pull Request
+1. Fork the project
+2. Create a branch for your feature (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Open a Pull Request
 
-## 📁 Estrutura do Projeto
+## 📁 Project Structure
 ```bash
 top_from_samsung-music/
 ├── android_java/
 │   └── app/
 │       ├── src/main/java/com/lucas8126/top100insm/
-│       │   ├── PermissionsHandler.java    # Gestão de permissões
-│       │   ├── MusicProcessor.java        # Processamento principal
-│       │   ├── CollectTop.java           # Serviço de principal
+│       │   ├── PermissionsHandler.java   # Permission Management
+│       │   ├── MusicProcessor.java       # Main Processing
+│       │   ├── CollectTop.java           # Main Service
 │       │   └── ...
-│       └── google-services.json          # Configuração Firebase
+│       └── google-services.json          # Firebase Configuration
 └── web/
     ├── src
     │   ├── style.css
@@ -134,16 +137,16 @@ top_from_samsung-music/
     └── index.html
 ```
 
-## ⚠️ Problemas Conhecidos
+## ⚠️ Known Issues
 
-- A app só funciona com ficheiros M3U da Samsung Music
-- Requer reinicialização se as permissões forem negadas
-- Metadata extraction pode falhar com ficheiros corrompidos
+- The app only works with Samsung Music M3U files
+- Requires a restart if permissions are denied
+- Metadata extraction may fail with corrupted files
 
-## 🛠️ Resolução de Problemas
+## 🛠️ Troubleshooting
 
-**Q: A app não encontra o ficheiro M3U?**  
-**A:** Certifica-te que a playlist tem o nome **MOST_LISTENED**.
+**Q: The app can't find the M3U file?**
+**A:** Make sure the playlist is named **MOST_LISTENED**.
 
-**Q: O upload falha?**  
-**A:** Verifica a ligação à internet e as configurações do Firebase. Se o telemóvel estiver no modo poupança de bateria, a aplicação só funcionará se tiver permitido o uso de bateria sem restrição.
+**Q: The upload fails?**
+**A:** Check your internet connection and Firebase settings. If your phone is in battery saver mode, the app will only work if you've enabled unrestricted battery usage.
