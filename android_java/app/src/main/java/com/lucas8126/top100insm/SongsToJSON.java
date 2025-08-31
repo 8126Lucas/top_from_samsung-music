@@ -14,7 +14,7 @@ public class SongsToJSON {
         try (FileWriter writer = new FileWriter(json_file)) {
             gson.toJson(songs, writer);
         } catch (IOException error) {
-            System.out.println("❌ JSON writing failed: " + error.getMessage());
+            // System.out.println("❌ JSON writing failed: " + error.getMessage());
         }
         return json_file;
     }

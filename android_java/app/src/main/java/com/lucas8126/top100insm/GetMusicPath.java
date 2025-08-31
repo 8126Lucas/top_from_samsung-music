@@ -27,7 +27,7 @@ public class GetMusicPath {
                 }
             }
         } catch(FileNotFoundException error) {
-            System.out.println("❌ M3U file not found: " + error.getMessage());
+            // System.out.println("❌ M3U file not found: " + error.getMessage());
             return null;
         }
         return music_paths;

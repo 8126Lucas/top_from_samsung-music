@@ -5,8 +5,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -23,13 +25,21 @@ public class PermissionsHandler extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permissions_handler);
+        requestIgnoreBatteryOptimization();
         requestPermissions();
     }
+
+    private void requestIgnoreBatteryOptimization() {
+        Intent intent = new Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+        intent.setData(Uri.parse("package:" + getPackageName()));
+        startActivity(intent);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     private void requestPermissions() {
         String[] permissions = {
                 Manifest.permission.READ_MEDIA_AUDIO,
-                Manifest.permission.POST_NOTIFICATIONS
+                Manifest.permission.POST_NOTIFICATIONS,
         };
         List<String> permissions_to_request = new ArrayList<>();
         for (String permission : permissions) {
@@ -86,10 +96,10 @@ public class PermissionsHandler extends Activity {
         Intent service_intent = new Intent(this, TopMusicCollection.class);
         try {
             startService(service_intent);
-            System.out.println("TopMusicCollection service started.");
+            // System.out.println("TopMusicCollection service started.");
             finish();
         } catch (Exception e) {
-            System.out.println("Failed to start TopMusicCollection service: " + e.getMessage());
+            // System.out.println("Failed to start TopMusicCollection service: " + e.getMessage());
             NotificationCentral.showNotification(this, "❌ Failed to start the app.");
             finish();
         }

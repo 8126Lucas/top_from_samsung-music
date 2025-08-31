@@ -6,19 +6,21 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import androidx.annotation.Nullable;
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
-public abstract class CollectTop extends Service {
+public class CollectTop extends Service {
     private boolean isAuthenticated = false;
     private Handler mainThreadHandler = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        // System.out.println("🔧 Build type: " + (BuildConfig.DEBUG ? "DEBUG" : "RELEASE"));
         NotificationCentral.createNotificationChannel(this);
         FirebaseApp.initializeApp(this);
         mainThreadHandler = new Handler(Looper.getMainLooper());
@@ -47,77 +49,36 @@ public abstract class CollectTop extends Service {
 
     private void startWork() {
         if(isAuthenticated) {
-            new Thread(() -> {
-                ArrayList<Song> songs;
-                try {
-                    System.out.println("⌛ Loading playlist...");
-                    songs = GetMusicData.getMusicData(this);
-                    if (songs == null) {
-                        System.out.println("❌ Failed to load playlist. Stopping app.");
-                        stopSelf();
-                        return;
-                    }
-                    NotificationCentral.showNotification(this, "✅ " + songs.size() + " songs found!");
-                    File json_file = SongsToJSON.writeJSONFile(songs, getApplicationContext());
-                    System.out.println("⏰ Waiting for auth token to propagate...");
-                    jsonToFirebase(json_file, 0);
-//                    UploadToFirebase.cloudJSON(json_file, new FirebaseCallback() {
-//                        @Override
-//                        public void onSuccess() {
-//                            NotificationCentral.showNotification(CollectTop.this, "⬆️ JSON file uploaded successfully!");
-//                            stopSelf();
-//                        }
-//                        @Override
-//                        public void onFailure() {
-//                            NotificationCentral.showNotification(CollectTop.this, "❌ JSON file upload failed!");
-//                            stopSelf();
-//                        }
-//                    });
-                } catch (FileNotFoundException error) {
-                    System.out.println("❌ M3U file not found: " + error.getMessage());
-                    stopSelf();
-                }
-            }).start();
-        }
-        else {
-            NotificationCentral.showNotification(this, "⌛ Still authenticating, please wait...");
-        }
-    }
-
-    private void jsonToFirebase(File json_file, int attempts) {
-        final int MAX_ATTEMPTS = 7;
-        final int DELAY_BETWEEN_ATTEMPTS = 2000;
-
-        if (attempts >= MAX_ATTEMPTS) {
-            System.out.println("❌ Desistindo após " + MAX_ATTEMPTS + " tentativas");
-            NotificationCentral.showNotification(this, "❌ Token timeout - upload failed!");
-            stopSelf();
-        }
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.getCurrentUser().getIdToken(true)
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()) {
-                        System.out.println("🎯 Token está pronto!");
-                        UploadToFirebase.cloudJSON(json_file, new FirebaseCallback() {
-                            @Override
-                            public void onSuccess() {
-                                NotificationCentral.showNotification(CollectTop.this, "⬆️ JSON file uploaded successfully!");
-                                stopSelf();
+            Constraints constraints = new Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build();
+            OneTimeWorkRequest work_request = new OneTimeWorkRequest.Builder(MusicProcessor.class)
+                    .setConstraints(constraints)
+                    .build();
+            WorkManager.getInstance(getApplicationContext()).enqueue(work_request);
+            WorkManager.getInstance(getApplicationContext())
+                    .getWorkInfoByIdLiveData(work_request.getId())
+                    .observeForever(work_info -> {
+                        if (work_info != null) {
+                            switch (work_info.getState()) {
+                                case ENQUEUED:
+                                    NotificationCentral.showNotification(this, "⌛ Enqueued");
+                                    break;
+                                case RUNNING:
+                                    NotificationCentral.showNotification(this, "🚗 Running");
+                                    break;
+                                case SUCCEEDED:
+                                    NotificationCentral.showNotification(this, "☁ JSON file uploaded successfully!");
+                                    stopSelf();
+                                    break;
+                                case FAILED:
+                                    NotificationCentral.showNotification(this, "❌ JSON file upload failed!");
+                                    stopSelf();
+                                    break;
                             }
-                            @Override
-                            public void onFailure() {
-                                NotificationCentral.showNotification(CollectTop.this, "❌ JSON file upload failed!");
-                                stopSelf();
-                            }
-                        });
-                    }
-                    else {
-                        System.out.println("⏳ Token ainda não está pronto...");
-                        mainThreadHandler.postDelayed(() -> {
-                            jsonToFirebase(json_file, attempts + 1);
-                        }, DELAY_BETWEEN_ATTEMPTS);
-                    }
-                });
+                        }
+                    });
+        }
     }
 
     @Nullable

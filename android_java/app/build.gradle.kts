@@ -52,6 +52,7 @@ dependencies {
     implementation("org.apache.tika:tika-parsers-standard-package:3.2.2") {
         exclude(group = "commons-logging", module = "commons-logging")
     }
+    implementation("androidx.work:work-runtime:2.9.0")
     implementation("com.google.code.gson:gson:2.13.1")
     implementation(platform("com.google.firebase:firebase-bom:34.1.0"))
     implementation("com.google.firebase:firebase-analytics")

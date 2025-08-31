@@ -20,10 +20,16 @@ public class GetMusicData {
             NotificationCentral.showNotification(context, "✅ File found: " + playlist.getName());
         }
         List<String> song_paths = GetMusicPath.getMusicPath(playlist);
+        int song_count = 0;
         assert song_paths != null;
         for(String paths : song_paths) {
             GetMetadata.extractMetadata(songs, paths);
+            song_count++;
+            if(song_count % 10 == 0) {
+                NotificationCentral.showNotification(context, "🎵 " + song_count + " songs extracted until now.");
+            }
         }
+        NotificationCentral.showNotification(context, "✅ " + song_count + " songs found.");
         return songs;
     }
 }
