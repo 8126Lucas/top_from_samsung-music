@@ -1,16 +1,22 @@
 # My Top 100 on Samsung Music 🎵
 
-[Leia em Português](README.pt.md) | [Read in English](#)
-
-A **complete solution** that analyzes your most listened to songs:
-- 📱 Android app for data collection
-- 🌐 Webpage for online viewing
+<div align="center">
+<a href="README.pt.md">Leia em Português</a> | <a href="#">Read in English</a>
+</div>
+<div align="center">
+<img src="screenshots/icon.png">
+</div>
 
 ![GitHub License](https://img.shields.io/github/license/8126Lucas/top_from_samsung-music)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 ![GitHub issues](https://img.shields.io/github/issues/8126Lucas/top_from_samsung-music)
 ![GitHub stars](https://img.shields.io/github/stars/8126Lucas/top_from_samsung-music)
+
+A **complete solution** that analyzes your most listened to songs:
+- 📱 Android app for data collection
+- 🌐 Webpage for online viewing
+
 
 ## 📸 Screenshots
 
@@ -104,19 +110,12 @@ firebase.storage service {
 ## 🌐 Configuring the Webpage
 
 1. Upload the `index.html`, `src/script.js`, `src/style.css` files to a web server/GitHub Pages <br>
-1.1. Alternatively, you can use `npm run dev` to run locally
-3. Configure the Firebase rules (already defined above)
-4. The webpage will automatically fetch the latest data
+     - **Alternative**: Use `npm run dev` to test it locally
+2. Configure the Firebase rules (already defined above)
+3. The webpage will automatically fetch the latest data
 
 **Note: **To use with your own data, replace the Firebase configuration in `script.js` with your own configuration.
 
-## 🤝 How to Contribute
-
-1. Fork the project
-2. Create a branch for your feature (`git checkout -b feature/new-feature`)
-3. Commit your changes (`git commit -am 'Add new feature'`)
-4. Push to the branch (`git push origin feature/new-feature`)
-5. Open a Pull Request
 
 ## 📁 Project Structure
 ```bash
@@ -150,3 +149,15 @@ top_from_samsung-music/
 
 **Q: The upload fails?**
 **A:** Check your internet connection and Firebase settings. If your phone is in battery saver mode, the app will only work if you've enabled unrestricted battery usage.
+
+## 👥 Authors
+- [**Lucas Santos**](https://github.com/8126Lucas) - Android app and website development
+- **Joana Alves** - Design and visual interface 
+
+## 🤝 How to Contribute
+
+1. Fork the project
+2. Create a branch for your feature (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Open a Pull Request

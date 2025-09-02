@@ -1,16 +1,22 @@
 # My Top 100 in Samsung Music 🎵
 
-[Leia em Português](#) | [Read in English](README.md)
-
-Uma **solução completa** que analisa as tuas músicas mais ouvidas: 
-- 📱 App Android para recolha de dados
-- 🌐 Webpage para visualização online
+<div align="center">
+<a href="#">Leia em Português</a> | <a href="README.md">Read in English</a>
+</div>
+<div align="center">
+<img src="screenshots/icon.png">
+</div>
 
 ![GitHub License](https://img.shields.io/github/license/8126Lucas/top_from_samsung-music)
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 ![GitHub issues](https://img.shields.io/github/issues/8126Lucas/top_from_samsung-music)
 ![GitHub stars](https://img.shields.io/github/stars/8126Lucas/top_from_samsung-music)
+
+Uma **solução completa** que analisa as tuas músicas mais ouvidas: 
+- 📱 App Android para recolha de dados
+- 🌐 Webpage para visualização online
+
 
 ## 📸 Screenshots
 
@@ -37,6 +43,7 @@ Além da aplicação Android, o projeto inclui uma webpage que mostra as música
 - ✅ Data da última atualização
 
 **Acesso:** [Ver o meu top de músicas mais ouvidas](https://8126lucas.github.io/top_from_samsung-music/)
+
 
 ## 📱 Como Funciona
 
@@ -73,15 +80,15 @@ Além da aplicação Android, o projeto inclui uma webpage que mostra as música
 ```bash
 git clone https://github.com/8126Lucas/top_from_samsung-music.git
 ```
-2. Iniciar um projeto no Firebase
-3. Obter as chaves SHA-1 e SHA-256 do Firebase:
+1. Iniciar um projeto no Firebase
+2. Obter as chaves SHA-1 e SHA-256 do Firebase:
 ```bash
 # No Windows
 keytool -list -v -keystore %USERPROFILE%\.android\debug.keystore -alias androiddebugkey -storepass android -keypass android
 # Em Linux ou MacOS
 keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
 ```
-4. Introduzir as chaves no projeto Firebase:
+1. Introduzir as chaves no projeto Firebase:
 ```bash
 "Configurações do projeto" > "Seus aplicativos" > "Aplicativos Android" > "Adicionar impressão digital"
 ```
@@ -104,19 +111,12 @@ service firebase.storage {
 ## 🌐 Configurar a Webpage
 
 1. Fazer upload dos ficheiros `index.html`, `src/script.js`, `src/style.css` para um servidor web/GitHub Pages <br>
-  1.1. Alternativamente, pode fazer `npm run dev` para correr localmente 
-3. Configurar as regras do Firebase (já definidas acima)
-4. A webpage irá automaticamente buscar os dados mais recentes
+   - **Alternativa:** Executar `npm run dev` para testar localmente
+2. Configurar as regras do Firebase (já definidas acima)
+3. A webpage irá automaticamente buscar os dados mais recentes
 
 **Nota:** Para usar com os teus próprios dados, substitui a configuração Firebase no `script.js` pela tua configuração pessoal.
 
-## 🤝 Como Contribuir
-
-1. Faz um fork do projeto
-2. Cria uma branch para a tua feature (`git checkout -b feature/nova-funcionalidade`)
-3. Commit das tuas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/nova-funcionalidade`)
-5. Abre um Pull Request
 
 ## 📁 Estrutura do Projeto
 ```bash
@@ -150,3 +150,15 @@ top_from_samsung-music/
 
 **Q: O upload falha?**  
 **A:** Verifica a ligação à internet e as configurações do Firebase. Se o telemóvel estiver no modo poupança de bateria, a aplicação só funcionará se tiver permitido o uso de bateria sem restrição.
+
+## 👥 Autores
+- [**Lucas Santos**](https://github.com/8126Lucas) - Desenvolvimento da aplicação Android e website
+- **Joana Alves** - Design e interface visual
+
+## 🤝 Como Contribuir
+
+1. Faz um fork do projeto
+2. Cria uma branch para a tua feature (`git checkout -b feature/nova-funcionalidade`)
+3. Commit das tuas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/nova-funcionalidade`)
+5. Abre um Pull Request

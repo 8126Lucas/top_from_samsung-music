@@ -19,7 +19,7 @@ public class NotificationCentral {
     }
     public static void showNotification(Context context, final String message) {
         NotificationCompat.Builder notification_builder = new NotificationCompat.Builder(context, "notification_service");
-        notification_builder.setSmallIcon(R.drawable.ic_launcher_foreground)
+        notification_builder.setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle("My Top 100")
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
