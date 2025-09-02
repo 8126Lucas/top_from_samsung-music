@@ -42,7 +42,7 @@ Além da aplicação Android, o projeto inclui uma webpage que mostra as música
 - ✅ Links diretos para o YouTube
 - ✅ Data da última atualização
 
-**Acesso:** [Ver o meu top de músicas mais ouvidas](https://8126lucas.github.io/top_from_samsung-music/)
+**Acesso:** [Ver o meu top de músicas mais ouvidas](https://8126lucas.github.io/top_from_samsung-music/web/)
 
 
 ## 📱 Como Funciona

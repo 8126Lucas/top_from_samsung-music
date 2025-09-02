@@ -42,7 +42,7 @@ In addition to the Android app, the project includes a webpage that displays the
 - ✅ Direct links to YouTube
 - ✅ Last updated date
 
-**Access:** [See my top listened to songs](https://8126lucas.github.io/top_from_samsung-music/)
+**Access:** [See my top listened to songs](https://8126lucas.github.io/top_from_samsung-music/web/)
 
 ## 📱 How it Works
 
