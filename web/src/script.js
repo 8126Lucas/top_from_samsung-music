@@ -1,7 +1,3 @@
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, getDownloadURL, getMetadata } from 'firebase/storage';
-import { gsap } from 'gsap';
-
 const firebaseConfig = {
   apiKey: "AIzaSyA1j9MLD-IMw-3ddcgpcUrlHiRIwn8c0HI",
   authDomain: "top-100-from-samsung-music.firebaseapp.com",
@@ -12,11 +8,11 @@ const firebaseConfig = {
   measurementId: "G-YZ7HR572Y7"
 };
 
-const app = initializeApp(firebaseConfig);
-const storage = getStorage();
-const path_reference = ref(storage, "MOST_LISTENED.json");
+const app = firebase.initializeApp(firebaseConfig);
+const storage = firebase.storage();
+const path_reference = storage.ref("MOST_LISTENED.json");
 
-getDownloadURL(path_reference)
+path_reference.getDownloadURL()
     .then((url) => {
         return fetch(url)
     })
@@ -36,7 +32,7 @@ getDownloadURL(path_reference)
             transformOrigin: "center bottom",
         });
     });
-getMetadata(path_reference)
+path_reference.getMetadata()
     .then((metadata) => {
         lastUpdated(metadata.timeCreated);
     })
