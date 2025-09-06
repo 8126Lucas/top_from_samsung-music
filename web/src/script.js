@@ -50,7 +50,7 @@ function displaySongs(json_data) {
             <div class="album">${json_data[i].album}</div>
             <div class="artist">${json_data[i].artist}</div>
             <div class="duration">${durationTimestamp(parseInt(json_data[i].duration))}</div>
-            <div class="youtube"><a href="${json_data[i].youtube}"><img src="src/youtube.svg"></a></div>
+            <div class="youtube"><a href="${json_data[i].youtube}" target="_blank"><img src="src/youtube.svg"></a></div>
             </div>`
         }
         else {

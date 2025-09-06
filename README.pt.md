@@ -80,15 +80,15 @@ Além da aplicação Android, o projeto inclui uma webpage que mostra as música
 ```bash
 git clone https://github.com/8126Lucas/top_from_samsung-music.git
 ```
-1. Iniciar um projeto no Firebase
-2. Obter as chaves SHA-1 e SHA-256 do Firebase:
+2. Iniciar um projeto no Firebase
+3. Obter as chaves SHA-1 e SHA-256 do Firebase:
 ```bash
 # No Windows
 keytool -list -v -keystore %USERPROFILE%\.android\debug.keystore -alias androiddebugkey -storepass android -keypass android
 # Em Linux ou MacOS
 keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
 ```
-1. Introduzir as chaves no projeto Firebase:
+4. Introduzir as chaves no projeto Firebase:
 ```bash
 "Configurações do projeto" > "Seus aplicativos" > "Aplicativos Android" > "Adicionar impressão digital"
 ```

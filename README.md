@@ -1,4 +1,4 @@
-# My Top 100 on Samsung Music 🎵
+# My Top 100 in Samsung Music 🎵
 
 <div align="center">
 <a href="README.pt.md">Leia em Português</a> | <a href="#">Read in English</a>
@@ -13,14 +13,13 @@
 ![GitHub issues](https://img.shields.io/github/issues/8126Lucas/top_from_samsung-music)
 ![GitHub stars](https://img.shields.io/github/stars/8126Lucas/top_from_samsung-music)
 
-A **complete solution** that analyzes your most listened to songs:
+A **complete solution** that analyzes your most listened songs:
 - 📱 Android app for data collection
-- 🌐 Webpage for online viewing
-
+- 🌐 Webpage for online visualization
 
 ## 📸 Screenshots
 
-| Permissions | File Found | Upload Successful | Website |
+|   Permissions   | File Found | Successful Upload | Website |
 |----------------|---------------------|---------------------|---------|
 | ![perms](screenshots/permissions.jpg) | ![file](screenshots/file_found.jpg) | ![upload](screenshots/upload.jpg) | ![web](screenshots/web.png)
 
@@ -28,25 +27,25 @@ A **complete solution** that analyzes your most listened to songs:
 
 - ✅ Automatically finds M3U files
 - ✅ Extracts song metadata (title, artist, album)
-- ✅ Automatically generates YouTube URLs using title + artist for search
+- ✅ Generates YouTube URLs automatically using title + artist for search
 - ✅ Authenticates with Firebase
-- ✅ Secure cloud upload
+- ✅ Secure upload to the cloud
 
-## 🌐 Preview Webpage
+## 🌐 Visualization Webpage
 
-In addition to the Android app, the project includes a webpage that displays the songs in a visual interface:
+In addition to the Android application, the project includes a webpage that displays the songs in a visual interface:
 
-- ✅ Real-time preview of Firebase data
+- ✅ Real-time visualization of data from Firebase
 - ✅ Responsive design for all devices
 - ✅ Smooth animations with GSAP
 - ✅ Direct links to YouTube
-- ✅ Last updated date
+- ✅ Date of last update
 
-**Access:** [See my top listened to songs](https://8126lucas.github.io/top_from_samsung-music/web/)
+**Access:** [View my top listened songs](https://8126lucas.github.io/top_from_samsung-music/web/)
 
-## 📱 How it Works
+## 📱 How It Works
 
-1. The app requests necessary permissions
+1. The app asks for necessary permissions
 2. Searches for `MOST_LISTENED.m3u` files on the device
 3. Extracts song information
 4. Converts everything to JSON
@@ -54,17 +53,17 @@ In addition to the Android app, the project includes a webpage that displays the
 
 ## 🔧 Technologies Used
 
-### Android App
-- **Android SDK** - Core Platform
+### Android Application
+- **Android SDK** - Main platform
 - **Firebase** - Authentication and Storage
-- **Apache Tika** - Metadata Extraction
+- **Apache Tika** - Metadata extraction
 - **Gson** - Conversion to JSON
-- **WorkManager** - Background Tasks
+- **WorkManager** - Background tasks
 ### Web Frontend
-- **HTML5/CSS3** - Responsive UI
-- **JavaScript ES6** - Application Logic
-- **Firebase SDK** - Real-Time Connection
-- **GSAP** - Animations and Transitions
+- **HTML5/CSS3** - Responsive interface
+- **JavaScript ES6** - Application logic
+- **Firebase SDK** - Real-time connection
+- **GSAP** - Animations and transitions
 
 ## 📋 Prerequisites
 
@@ -73,7 +72,7 @@ In addition to the Android app, the project includes a webpage that displays the
 - M3U file on the device
 - Internet/mobile data connection
 
-## ⚙️ Installing the App
+## ⚙️ Install the Application
 
 1. Clone the repository:
 ```bash
@@ -87,35 +86,34 @@ keytool -list -v -keystore %USERPROFILE%\.android\debug.keystore -alias androidd
 # On Linux or macOS
 keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
 ```
-4. Insert the keys into the Firebase project:
+4. Enter the keys in the Firebase project:
 ```bash
-"Project Settings" > "Your Apps" > "Android Apps" > "Add Fingerprint"
+"Project settings" > "Your apps" > "Android apps" > "Add fingerprint"
 ```
-5. Download `google-services.json`
-6. Save `google-services.json` in `top_from_samsung-music/android_java/app/`
-7. Define Firebase Rules
+5. Download the `google-services.json` file
+6. Save the `google-services.json` in `top_from_samsung-music/android_java/app/`
+7. Define the Firebase rules
 ```javascript
 rules_version = '2';
-firebase.storage service {
-    match /b/{bucket}/o {
-        match /{allPaths=**} {
-            allow read: if true;
-            allow write: if request.auth != null;
-        }
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
     }
+  }
 }
 ```
 8. Compile and install on the device
 
-## 🌐 Configuring the Webpage
+## 🌐 Configure the Webpage
 
-1. Upload the `index.html`, `src/script.js`, `src/style.css` files to a web server/GitHub Pages <br>
-     - **Alternative**: Use `npm run dev` to test it locally
+1. Upload the files `index.html`, `src/script.js`, `src/style.css` to a web server/GitHub Pages <br>
+   - **Alternative:** Run `npm run dev` to test locally
 2. Configure the Firebase rules (already defined above)
 3. The webpage will automatically fetch the latest data
 
-**Note: **To use with your own data, replace the Firebase configuration in `script.js` with your own configuration.
-
+**Note:** To use with your own data, replace the Firebase configuration in `script.js` with your personal configuration.
 
 ## 📁 Project Structure
 ```bash
@@ -123,11 +121,11 @@ top_from_samsung-music/
 ├── android_java/
 │   └── app/
 │       ├── src/main/java/com/lucas8126/top100insm/
-│       │   ├── PermissionsHandler.java   # Permission Management
-│       │   ├── MusicProcessor.java       # Main Processing
-│       │   ├── CollectTop.java           # Main Service
+│       │   ├── PermissionsHandler.java   # Permission management
+│       │   ├── MusicProcessor.java       # Main processing
+│       │   ├── CollectTop.java           # Main service
 │       │   └── ...
-│       └── google-services.json          # Firebase Configuration
+│       └── google-services.json          # Firebase configuration
 └── web/
     ├── src
     │   ├── style.css
@@ -138,21 +136,21 @@ top_from_samsung-music/
 
 ## ⚠️ Known Issues
 
-- The app only works with Samsung Music M3U files
-- Requires a restart if permissions are denied
+- The app only works with M3U files from Samsung Music
+- Requires restart if permissions are denied
 - Metadata extraction may fail with corrupted files
 
 ## 🛠️ Troubleshooting
 
-**Q: The app can't find the M3U file?**
+**Q: The app does not find the M3U file?**  
 **A:** Make sure the playlist is named **MOST_LISTENED**.
 
-**Q: The upload fails?**
-**A:** Check your internet connection and Firebase settings. If your phone is in battery saver mode, the app will only work if you've enabled unrestricted battery usage.
+**Q: The upload fails?**  
+**A:** Check the internet connection and Firebase settings. If the phone is in battery saver mode, the application will only work if you have allowed the use of battery without restriction.
 
 ## 👥 Authors
-- [**Lucas Santos**](https://github.com/8126Lucas) - Android app and website development
-- **Joana Alves** - Design and visual interface 
+- [**Lucas Santos**](https://github.com/8126Lucas) - Android application and website development
+- **Joana Alves** - Design and visual interface
 
 ## 🤝 How to Contribute
 
